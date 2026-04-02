@@ -14,10 +14,10 @@ const LoginScreen = () => {
 
       <View style={styles.formContainer}>
         <TextInput placeholder="Enter your email" />
-        <TextInput placeholder="Enter your password" />
+        <TextInput type="password" placeholder="Enter your password" />
       </View>
 
-      <Button title="Sign In" style={{ marginTop: 20 }} />
+      <Button title="Sign In" />
     </View>
   );
 };
