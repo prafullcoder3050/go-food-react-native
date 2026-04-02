@@ -2,11 +2,12 @@ import Button from '@/components/common/Button';
 import Text from '@/components/common/Text';
 import TextInput from '@/components/common/TextInput';
 import { COLORS, TYPOGRAPHY } from '@/theme/theme';
+import { NavigationProp } from '@/types/navigation';
 import { useNavigation } from '@react-navigation/native';
 import { Image, StyleSheet, View } from 'react-native';
 
 const SignupScreen = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp>();
 
   return (
     <View style={styles.container}>
@@ -16,7 +17,7 @@ const SignupScreen = () => {
         Already have an account?{' '}
         <Text
           style={styles.signupLink}
-          onPress={() => navigation.navigate('Login')}
+          onPress={() => navigation.replace('Login')}
         >
           Sign In
         </Text>
@@ -32,7 +33,7 @@ const SignupScreen = () => {
         ))}
       </View>
 
-      <Button title="Sign Up" />
+      <Button title="Sign Up" onPress={() => navigation.replace('Home')} />
     </View>
   );
 };

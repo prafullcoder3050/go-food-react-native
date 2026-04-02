@@ -2,11 +2,12 @@ import Button from '@/components/common/Button';
 import Text from '@/components/common/Text';
 import TextInput from '@/components/common/TextInput';
 import { COLORS, TYPOGRAPHY } from '@/theme/theme';
+import { NavigationProp } from '@/types/navigation';
 import { useNavigation } from '@react-navigation/native';
 import { Image, StyleSheet, View } from 'react-native';
 
 const LoginScreen = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp>();
 
   return (
     <View style={styles.container}>
@@ -30,7 +31,7 @@ const LoginScreen = () => {
         ))}
       </View>
 
-      <Button title="Sign In" />
+      <Button title="Sign In" onPress={() => navigation.replace('Home')} />
     </View>
   );
 };

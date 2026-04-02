@@ -6,15 +6,19 @@ import { COLORS, TYPOGRAPHY } from '@/theme/theme';
 import { onboardingStepsData } from '@/utils/data';
 import Text from '@/components/common/Text';
 import { useNavigation } from '@react-navigation/native';
+import { NavigationProp } from '@/types/navigation';
 
 const OnboardingScreen = () => {
-  const navigation = useNavigation();
   const [activeStep, setActiveStep] = useState(0);
+  const navigation = useNavigation<NavigationProp>();
   const data = (onboardingStepsData as any)[activeStep + 1];
 
   const handleNext = () => {
     if (activeStep == 2) {
-      navigation.navigate('Login');
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'Login' }],
+      });
       return;
     }
     setActiveStep(prev => prev + 1);
