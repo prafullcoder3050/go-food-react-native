@@ -6,10 +6,10 @@ import {
   View,
   TouchableOpacity,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
 import InputError from './InputError';
 import InputLabel from './InputLabel';
 import { COLORS, TYPOGRAPHY } from '@/theme/theme';
+import { Eye, EyeOff } from 'lucide-react-native';
 
 interface Props extends TextInputProps {
   label?: string;
@@ -57,11 +57,11 @@ const TextInput = ({
             onPress={togglePasswordVisibility}
             activeOpacity={0.7}
           >
-            <Icon
-              name={isPasswordVisible ? 'eye-off-outline' : 'eye-outline'}
-              size={20}
-              color={COLORS.grayMedium}
-            />
+            {isPasswordVisible ? (
+              <Eye size={20} color={COLORS.grayMedium} />
+            ) : (
+              <EyeOff size={20} color={COLORS.grayMedium} />
+            )}
           </TouchableOpacity>
         )}
       </View>

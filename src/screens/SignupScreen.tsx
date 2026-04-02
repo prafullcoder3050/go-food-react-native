@@ -5,19 +5,21 @@ import { COLORS, TYPOGRAPHY } from '@/theme/theme';
 import { useNavigation } from '@react-navigation/native';
 import { Image, StyleSheet, View } from 'react-native';
 
-const LoginScreen = () => {
+const SignupScreen = () => {
   const navigation = useNavigation();
 
   return (
     <View style={styles.container}>
       <Image style={styles.logo} source={require('@/assets/images/logo.png')} />
-      <Text style={styles.heading}>Welcome Back</Text>
-      <Text style={styles.description}>Hello Jos, sign in to continue! Or</Text>
-      <Text
-        style={styles.signupLink}
-        onPress={() => navigation.navigate('Signup')}
-      >
-        Create new account
+      <Text style={styles.heading}>Hello! Create Account</Text>
+      <Text style={styles.description}>
+        Already have an account?{' '}
+        <Text
+          style={styles.signupLink}
+          onPress={() => navigation.navigate('Login')}
+        >
+          Sign In
+        </Text>
       </Text>
 
       <View style={styles.formContainer}>
@@ -30,12 +32,12 @@ const LoginScreen = () => {
         ))}
       </View>
 
-      <Button title="Sign In" />
+      <Button title="Sign Up" />
     </View>
   );
 };
 
-export default LoginScreen;
+export default SignupScreen;
 
 const styles = StyleSheet.create({
   container: {
@@ -84,6 +86,12 @@ const fields = [
     name: 'password',
     label: 'Password',
     placeholder: 'Enter your password',
+    type: 'password',
+  },
+  {
+    name: 'confirmPassword',
+    label: 'Confirm Password',
+    placeholder: 'Confirm your password',
     type: 'password',
   },
 ];
