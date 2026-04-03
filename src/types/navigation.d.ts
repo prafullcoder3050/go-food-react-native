@@ -3,8 +3,8 @@ export type RootStackParamList = {
   Onboarding: undefined;
   Login: undefined;
   Signup: undefined;
-  Home: undefined;
   VerifyEmail: undefined;
+  Home: undefined;
 };
 
 declare global {

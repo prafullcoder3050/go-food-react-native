@@ -25,11 +25,9 @@ const SignupScreen = () => {
     formState: { errors },
   } = useForm({ defaultValues, resolver: yupResolver(signupSchema) });
 
-  const onSubmit = () => {
-    navigation.replace('VerifyEmail');
+  const onSubmit = (data: typeof defaultValues) => {
+    navigation.replace('VerifyEmail', { email: data.email });
   };
-
-  console.log('errors', errors);
 
   return (
     <View style={styles.container}>
@@ -112,6 +110,12 @@ const styles = StyleSheet.create({
 });
 
 const fields = [
+  {
+    name: 'name',
+    label: 'Name',
+    placeholder: 'Enter your name',
+    type: 'text',
+  },
   {
     name: 'email',
     label: 'Email',
