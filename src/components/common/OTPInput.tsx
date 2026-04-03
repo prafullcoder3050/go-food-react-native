@@ -89,7 +89,6 @@ const styles = StyleSheet.create({
   boxText: {
     fontSize: 22,
     fontFamily: TYPOGRAPHY.fonts.bold,
-    color: COLORS.primaryLight,
   },
   underline: {
     position: 'absolute',

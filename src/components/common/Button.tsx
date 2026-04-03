@@ -12,7 +12,10 @@ interface Props extends TouchableOpacityProps {
 
 const Button = ({ title, ...props }: Props) => {
   return (
-    <TouchableOpacity {...props} style={[styles.button, props.style]}>
+    <TouchableOpacity
+      {...props}
+      style={[styles.button, props.style, props.disabled && styles.disabled]}
+    >
       <Text style={styles.text}>{title}</Text>
     </TouchableOpacity>
   );
@@ -32,5 +35,8 @@ const styles = StyleSheet.create({
   text: {
     color: COLORS.white,
     fontFamily: TYPOGRAPHY.fonts.medium,
+  },
+  disabled: {
+    opacity: 0.5,
   },
 });

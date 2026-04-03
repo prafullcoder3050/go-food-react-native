@@ -2,13 +2,25 @@ import Button from '@/components/common/Button';
 import OTPInput from '@/components/common/OTPInput';
 import Text from '@/components/common/Text';
 import { COLORS, TYPOGRAPHY } from '@/theme/theme';
+import { NavigationProp } from '@/types/navigation';
 import { useNavigation, useRoute } from '@react-navigation/native';
+import { useState } from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 
 const VerifyEmailScreen = () => {
   const route = useRoute();
-  const navigation = useNavigation();
+  const [code, setCode] = useState('');
+  const navigation = useNavigation<NavigationProp>();
+
   const { email } = route?.params as any;
+
+  const handleSubmit = () => {
+    if (code?.length !== 4) return;
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'Home' }],
+    });
+  };
 
   return (
     <View style={styles.container}>
@@ -19,11 +31,20 @@ const VerifyEmailScreen = () => {
       </Text>
 
       <View style={styles.formContainer}>
-        <OTPInput code="" setCode={() => {}} />
-        <Button title="Verify" />
+        <OTPInput code={code} setCode={setCode} />
+        <Button
+          title="Verify"
+          disabled={code?.length !== 4}
+          onPress={handleSubmit}
+        />
       </View>
 
-      <Text style={styles.loginLink}>Back to Sign In</Text>
+      <Text
+        style={styles.loginLink}
+        onPress={() => navigation.replace('Login')}
+      >
+        Back to Sign In
+      </Text>
     </View>
   );
 };

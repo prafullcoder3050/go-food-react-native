@@ -15,7 +15,7 @@ const defaultValues = {
 };
 
 const LoginScreen = () => {
-  const navigation = useNavigation<NavigationProp>();
+  const navigation = useNavigation();
 
   const {
     control,
@@ -24,7 +24,10 @@ const LoginScreen = () => {
   } = useForm({ defaultValues, resolver: yupResolver(loginSchema) });
 
   const onSubmit = () => {
-    navigation.replace('Home');
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'Home' }],
+    });
   };
 
   return (

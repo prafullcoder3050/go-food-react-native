@@ -26,7 +26,7 @@ const SignupScreen = () => {
   } = useForm({ defaultValues, resolver: yupResolver(signupSchema) });
 
   const onSubmit = (data: typeof defaultValues) => {
-    navigation.replace('VerifyEmail', { email: data.email });
+    navigation.navigate('VerifyEmail', { email: data.email });
   };
 
   return (
