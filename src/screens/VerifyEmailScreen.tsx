@@ -6,6 +6,7 @@ import { NavigationProp } from '@/types/navigation';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useState } from 'react';
 import { Image, StyleSheet, View } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const VerifyEmailScreen = () => {
   const route = useRoute();
@@ -14,12 +15,15 @@ const VerifyEmailScreen = () => {
 
   const { email } = route?.params as any;
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (code?.length !== 4) return;
+
     navigation.reset({
       index: 0,
       routes: [{ name: 'Home' }],
     });
+
+    await AsyncStorage.setItem('token', '1234567890');
   };
 
   return (

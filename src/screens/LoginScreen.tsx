@@ -2,12 +2,12 @@ import Button from '@/components/common/Button';
 import Text from '@/components/common/Text';
 import TextInput from '@/components/common/TextInput';
 import { COLORS, TYPOGRAPHY } from '@/theme/theme';
-import { NavigationProp } from '@/types/navigation';
 import { useNavigation } from '@react-navigation/native';
 import { Controller, useForm } from 'react-hook-form';
 import { Image, StyleSheet, View } from 'react-native';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { loginSchema } from '@/utils/validations';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const defaultValues = {
   email: '',
@@ -23,11 +23,13 @@ const LoginScreen = () => {
     formState: { errors },
   } = useForm({ defaultValues, resolver: yupResolver(loginSchema) });
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     navigation.reset({
       index: 0,
       routes: [{ name: 'Home' }],
     });
+
+    await AsyncStorage.setItem('token', '1234567890');
   };
 
   return (

@@ -7,18 +7,22 @@ import { onboardingStepsData } from '@/utils/data';
 import Text from '@/components/common/Text';
 import { useNavigation } from '@react-navigation/native';
 import { NavigationProp } from '@/types/navigation';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const OnboardingScreen = () => {
   const [activeStep, setActiveStep] = useState(0);
   const navigation = useNavigation<NavigationProp>();
   const data = (onboardingStepsData as any)[activeStep + 1];
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (activeStep == 2) {
       navigation.reset({
         index: 0,
         routes: [{ name: 'Login' }],
       });
+
+      await AsyncStorage.setItem('isOnboardingCompleted', 'true');
+
       return;
     }
     setActiveStep(prev => prev + 1);
