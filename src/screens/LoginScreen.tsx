@@ -4,10 +4,28 @@ import TextInput from '@/components/common/TextInput';
 import { COLORS, TYPOGRAPHY } from '@/theme/theme';
 import { NavigationProp } from '@/types/navigation';
 import { useNavigation } from '@react-navigation/native';
+import { Controller, useForm } from 'react-hook-form';
 import { Image, StyleSheet, View } from 'react-native';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { loginSchema } from '@/utils/validations';
+
+const defaultValues = {
+  email: '',
+  password: '',
+};
 
 const LoginScreen = () => {
   const navigation = useNavigation<NavigationProp>();
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({ defaultValues, resolver: yupResolver(loginSchema) });
+
+  const onSubmit = () => {
+    navigation.replace('Home');
+  };
 
   return (
     <View style={styles.container}>
@@ -22,16 +40,29 @@ const LoginScreen = () => {
       </Text>
 
       <View style={styles.formContainer}>
-        {fields.map(field => (
-          <TextInput
-            key={field.name}
-            type={field.type as any}
-            placeholder={field.placeholder}
-          />
-        ))}
+        {fields.map(field => {
+          const error = (errors as any)?.[field.name]?.message;
+
+          return (
+            <Controller
+              key={field.name}
+              control={control}
+              name={field.name as any}
+              render={({ field: { onChange, value } }) => (
+                <TextInput
+                  value={value}
+                  error={error}
+                  onChangeText={onChange}
+                  type={field.type as any}
+                  placeholder={field.placeholder}
+                />
+              )}
+            />
+          );
+        })}
       </View>
 
-      <Button title="Sign In" onPress={() => navigation.replace('Home')} />
+      <Button title="Sign In" onPress={() => handleSubmit(onSubmit)()} />
     </View>
   );
 };

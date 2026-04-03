@@ -3,11 +3,33 @@ import Text from '@/components/common/Text';
 import TextInput from '@/components/common/TextInput';
 import { COLORS, TYPOGRAPHY } from '@/theme/theme';
 import { NavigationProp } from '@/types/navigation';
+import { signupSchema } from '@/utils/validations';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigation } from '@react-navigation/native';
+import { Controller, useForm } from 'react-hook-form';
 import { Image, StyleSheet, View } from 'react-native';
+
+const defaultValues = {
+  name: '',
+  email: '',
+  password: '',
+  confirmPassword: '',
+};
 
 const SignupScreen = () => {
   const navigation = useNavigation<NavigationProp>();
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({ defaultValues, resolver: yupResolver(signupSchema) });
+
+  const onSubmit = () => {
+    navigation.replace('VerifyEmail');
+  };
+
+  console.log('errors', errors);
 
   return (
     <View style={styles.container}>
@@ -24,16 +46,29 @@ const SignupScreen = () => {
       </Text>
 
       <View style={styles.formContainer}>
-        {fields.map(field => (
-          <TextInput
-            key={field.name}
-            type={field.type as any}
-            placeholder={field.placeholder}
-          />
-        ))}
+        {fields.map(field => {
+          const error = (errors as any)?.[field.name]?.message;
+
+          return (
+            <Controller
+              key={field.name}
+              control={control}
+              name={field.name as any}
+              render={({ field: { onChange, value } }) => (
+                <TextInput
+                  value={value}
+                  error={error}
+                  onChangeText={onChange}
+                  type={field.type as any}
+                  placeholder={field.placeholder}
+                />
+              )}
+            />
+          );
+        })}
       </View>
 
-      <Button title="Sign Up" onPress={() => navigation.replace('Home')} />
+      <Button title="Sign Up" onPress={() => handleSubmit(onSubmit)()} />
     </View>
   );
 };

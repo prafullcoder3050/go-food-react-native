@@ -1,10 +1,6 @@
-import HomeScreen from '@/screens/HomeScreen';
-import LoginScreen from '@/screens/LoginScreen';
-import OnboardingScreen from '@/screens/OnboardingScreen';
-import SignupScreen from '@/screens/SignupScreen';
-import SplashScreen from '@/screens/SplashScreen';
 import { RootStackParamList } from '@/types/navigation';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import screens from './screens';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -14,11 +10,13 @@ const AppNavigator = () => {
       initialRouteName="Splash"
       screenOptions={{ headerShown: false }}
     >
-      <Stack.Screen name="Splash" component={SplashScreen} />
-      <Stack.Screen name="Onboarding" component={OnboardingScreen} />
-      <Stack.Screen name="Login" component={LoginScreen} />
-      <Stack.Screen name="Signup" component={SignupScreen} />
-      <Stack.Screen name="Home" component={HomeScreen} />
+      {screens.map(screen => (
+        <Stack.Screen
+          key={screen.name}
+          component={screen.component}
+          name={screen.name as keyof RootStackParamList}
+        />
+      ))}
     </Stack.Navigator>
   );
 };
